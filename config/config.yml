@@ -1,0 +1,32 @@
+# NeMo Guardrails Main Configuration
+# Supports Groq API via OpenAI-compatible endpoints or Groq engine
+
+models:
+  - type: main
+    engine: openai
+    model: qwen/qwen3.6-27b
+    parameters:
+      base_url: "https://api.groq.com/openai/v1"
+      temperature: 0.1
+
+rails:
+  input:
+    flows:
+      - check pii input
+      - check phone input
+      - check sql injection input
+
+  output:
+    flows:
+      - check competitor output
+
+sample_conversation: |
+  user "Hi"
+    express greeting
+  bot express greeting
+    "Hello! How can I assist you today with our platform?"
+
+  user "Can you help me reset my password?"
+    express request password reset
+  bot express password reset response
+    "Sure! You can reset your password by clicking 'Forgot Password' on the login screen."
